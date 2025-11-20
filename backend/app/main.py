@@ -33,18 +33,19 @@ def health_check():
 # Users endpoint GET
 # --------------------------
 @app.get("/api/users")
-def get_users():
+def get_users(
+    id: Optional[int] = Query(None),
+    name: Optional[str] = Query(None),
+    email: Optional[str] = Query(None),
+    age: Optional[int] = Query(None),
+    role: Optional[str] = Query(None),
+):
     """
     This endpoint returns the list of users stored in data/users.json.
     1. The file path is constructed relative to the current script using pathlib.
     2. The file is opened and loaded using json.load.
     3. If any error occurs (file missing or invalid JSON), return HTTP 500.
     """
-    id: Optional[int] = Query(None),
-    name: Optional[str] = Query(None),
-    email: Optional[str] = Query(None),
-    age: Optional[int] = Query(None),
-    role: Optional[str] = Query(None),
     
     try:
         # Construct the absolute path to the users.json file
