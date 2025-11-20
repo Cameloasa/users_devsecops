@@ -1,5 +1,5 @@
 import json
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
 from typing import Optional
 from pathlib import Path
@@ -40,11 +40,11 @@ def get_users():
     2. The file is opened and loaded using json.load.
     3. If any error occurs (file missing or invalid JSON), return HTTP 500.
     """
-    id: Optional[int] = None,
-    name: Optional[str] = None,
-    email: Optional[str] = None,
-    age: Optional[int] = None,
-    role: Optional[str] = None,
+    id: Optional[int] = Query(None),
+    name: Optional[str] = Query(None),
+    email: Optional[str] = Query(None),
+    age: Optional[int] = Query(None),
+    role: Optional[str] = Query(None),
     
     try:
         # Construct the absolute path to the users.json file
