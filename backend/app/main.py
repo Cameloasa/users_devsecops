@@ -1,6 +1,7 @@
 import json
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from typing import Optional
 from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 
@@ -29,7 +30,7 @@ def health_check():
     }
 
 # --------------------------
-# Users endpoint
+# Users endpoint GET
 # --------------------------
 @app.get("/api/users")
 def get_users():
@@ -39,6 +40,12 @@ def get_users():
     2. The file is opened and loaded using json.load.
     3. If any error occurs (file missing or invalid JSON), return HTTP 500.
     """
+    id: Optional[int] = None,
+    name: Optional[str] = None,
+    email: Optional[str] = None,
+    age: Optional[int] = None,
+    role: Optional[str] = None,
+    
     try:
         # Construct the absolute path to the users.json file
         data_file = Path("data/users.json").resolve()
@@ -48,6 +55,24 @@ def get_users():
         with open(data_file, "r", encoding="utf-8") as f:
             users = json.load(f)
 
+        # Apply filters
+        # Apply filters
+        if id is not None:
+            users = [u for u in users if u["id"] == id]
+
+        if name is not None:
+            users = [u for u in users if u["name"].lower() == name.lower()]
+
+        if email is not None:
+            users = [u for u in users if u["email"].lower() == email.lower()]
+
+        if age is not None:
+            users = [u for u in users if u["age"] == age]
+
+        if role is not None:
+            users = [u for u in users if u["role"].lower() == role.lower()]
+
+
         # Return JSON response
         return JSONResponse(content=users)
 
@@ -55,7 +80,7 @@ def get_users():
         # Return error if file not found or invalid JSON
         return JSONResponse(
             status_code=500,
-            content={"error": "Failed to load users", "details": str(e)}
+            content={"error": "Failed to load users and filter users", "details": str(e)}
         )
     
 # --------------------------
