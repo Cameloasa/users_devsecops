@@ -64,7 +64,7 @@ jobs:
           pip install -r requirements.txt
         # Explanation: Install safety and project dependencies.
       - name: Run safety scan
-        run: safety check --full-report --ignore 51457
+        run: safety check --full-report 
         # Explanation: Perform security audit on installed packages.
 
   playwright-e2e:
@@ -83,7 +83,7 @@ jobs:
         # Explanation: Install backend dependencies for FastAPI.
       - name: Start FastAPI server
         run: |
-          uvicorn backend.main:app --host 0.0.0.0 --port 8000 &
+          uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 &
           sleep 5
         # Explanation: Start FastAPI in the background and wait a few seconds.
       - name: Set up Node.js
