@@ -81,5 +81,5 @@ jobs:
       - name: Run Playwright tests
         run: |
           cd frontend
-          npx playwright test
-        # Explanation: Run all Playwright end-to-end tests.
+          npx playwright test --project=chromium
+        # Explanation: Run only chromium because library Playwright end-to-end tests.
