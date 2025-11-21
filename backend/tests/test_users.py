@@ -45,7 +45,7 @@ def test_get_user_by_email():
 # NEGATIVE TESTS / EDGE CASES
 # ----------------------
 def test_get_user_nonexistent_id():
-    response = client.get("/api/users", params={"user_id": 999})
+    response = client.get("/api/users", params={"id": 999})
     assert response.status_code == 200
 
     users = response.json()
