@@ -26,4 +26,12 @@ def test_get_user_by_id():
     assert len(users) == 1
     assert users[0]["name"] == "John Doe"
 
+def test_get_user_by_role():
+    response = client.get("/api/users", params={"role": "admin"})
+    assert response.status_code == 200
+
+    users = response.json()
+    assert len(users) == 1
+    assert users [0]["name"] == "John Doe"
+
     
