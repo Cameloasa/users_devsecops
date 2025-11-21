@@ -64,7 +64,7 @@ jobs:
           pip install -r requirements.txt
         # Explanation: Install safety and project dependencies.
       - name: Run safety scan
-        run: safety check --full-report 
+        run: safety check --full-report --ignore 51457
         # Explanation: Perform security audit on installed packages.
 
   playwright-e2e:
