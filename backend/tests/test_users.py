@@ -38,8 +38,8 @@ def test_get_user_by_email():
     assert response.status_code == 200
 
     users = response.json()
-    assert len(users) == 4
-    assert users[3]["name"] == "Alice Brown"
+    assert len(users) == 1
+    assert users[0]["name"] == "Alice Brown"
 
 # ----------------------
 # NEGATIVE TESTS / EDGE CASES
@@ -68,7 +68,7 @@ def test_get_user_nonexistent_email():
 def test_get_user_combination_filters():
     response = client.get("/api/users", params={"role": "admin", "age": 30})
     assert response.status_code == 200
-    
+
     users = response.json()
     assert len(users) == 1
     assert users[0]["name"] == "John Doe"
