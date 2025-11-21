@@ -24,26 +24,29 @@ test('test', async ({ page }) => {
 
 
 test('Health check and load users', async ({ page }) => {
-  // Navigate to homepage
+  // Navigate to home page
   await page.goto('http://127.0.0.1:8000');
 
-  // Click the health check button and verify JSON
+  // Click on button "Test Health Check"
   await page.getByRole('button', { name: /Test Health Check/i }).click();
-  const healthJson = await page.getByTestId('health-json').textContent();
-  expect(healthJson).toContain('"status": "ok"');
-  expect(healthJson).toContain('"service": "FastAPI backend"');
 
-  // Click the "Load Users" button
-  await page.getByRole('button', { name: /Load Users/i }).click();
+  // Verify if status test apeare 
+  await expect(page.getByText('Status: Application runs!')).toBeVisible();
 
-  // Verify at least 4 users are displayed
-  const userRows = await page.locator('.user-row').count();
-  expect(userRows).toBeGreaterThanOrEqual(4);
+  // Click on button "Load Users"
+await page.getByRole('button', { name: /Load Users/i }).click();
 
-  // Check specific user data is visible
+// Wait for at least 4 user headings to appear
+const userRows = page.locator('h3');
+
+// Retry loop until count >= 4 or timeout
+await page.waitForFunction(() => {
+  return document.querySelectorAll('h3').length >= 4;
+}, null, { timeout: 5000 });
+
+  // Verify some users 
   await expect(page.getByText(/John Doe/i)).toBeVisible();
   await expect(page.getByText(/Jane Smith/i)).toBeVisible();
-  // Add more users as needed, e.g.:
-  // await expect(page.getByText(/Alice Johnson/i)).toBeVisible();
-  // await expect(page.getByText(/Bob Brown/i)).toBeVisible();
+  await expect(page.getByText(/Bob Johnson/i)).toBeVisible();
+  await expect(page.getByText(/Alice Brown/i)).toBeVisible();
 });
