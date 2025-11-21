@@ -1,10 +1,7 @@
-import sys
-from pathlib import Path
-
-sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
-
+# 1. Third-party libraries
 from fastapi.testclient import TestClient
 
+# 2. Local imports
 from backend.app.main import app
 
 client = TestClient(app)
@@ -40,7 +37,9 @@ def test_get_user_by_role():
 
 
 def test_get_user_by_email():
-    response = client.get("/api/users", params={"email": "alice.brown@example.com"})
+    response = client.get(
+        "/api/users", params={"email": "alice.brown@example.com"}
+        )
     assert response.status_code == 200
 
     users = response.json()
@@ -68,7 +67,9 @@ def test_get_user_nonexistent_role():
 
 
 def test_get_user_nonexistent_email():
-    response = client.get("/api/users", params={"email": "nonexistent@example.com"})
+    response = client.get(
+        "/api/users", params={"email": "nonexistent@example.com"}
+        )
     assert response.status_code == 200
 
     users = response.json()

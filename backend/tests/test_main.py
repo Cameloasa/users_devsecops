@@ -1,14 +1,7 @@
-# 1. Standard library
-import sys
-from pathlib import Path
-
-# 2. Third-party libraries
+# 1. Third-party libraries
 from fastapi.testclient import TestClient
 
-# 3. Add project root to path (if really needed)
-sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
-
-# 4. Local imports
+# 2. Local imports
 from backend.app.main import app
 
 client = TestClient(app)

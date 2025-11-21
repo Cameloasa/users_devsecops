@@ -38,7 +38,7 @@ jobs:
           pip install pytest pytest-cov safety
         # Explanation: Install project dependencies and testing/security tools.
       - name: Run tests with coverage
-        run: pytest backend/tests --cov=backend --cov-report=xml
+        run: python -m pytest backend/tests --cov=backend --cov-report=xml
         # Explanation: Run backend unit tests and generate coverage report.
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
